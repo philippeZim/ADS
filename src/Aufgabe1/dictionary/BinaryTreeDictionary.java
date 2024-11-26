@@ -1,6 +1,6 @@
 // O. Bittel
 // 22.09.2022
-package dictionary;
+package Aufgabe1.dictionary;
 
 import java.util.Comparator;
 import java.util.Iterator;

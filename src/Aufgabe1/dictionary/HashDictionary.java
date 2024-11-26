@@ -1,4 +1,4 @@
-package dictionary;
+package Aufgabe1.dictionary;
 
 
 import java.util.ArrayList;

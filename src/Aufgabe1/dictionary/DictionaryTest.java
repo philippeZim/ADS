@@ -4,7 +4,7 @@
  * O. Bittel
  * 1.8.2023
  */
-package dictionary;
+package Aufgabe1.dictionary;
 
 /**
  * Static test methods for different Dictionary implementations.
