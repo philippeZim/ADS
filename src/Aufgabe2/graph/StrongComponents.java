@@ -5,10 +5,7 @@ package Aufgabe2.graph;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Klasse für Bestimmung aller strengen Komponenten.
@@ -29,8 +26,32 @@ public class StrongComponents<V> {
 	 * dem Kosaraju-Sharir Algorithmus.
 	 * @param g gerichteter Graph.
 	 */
+
+	private void visitDF(V v, DirectedGraph<V> g, Set<V> visited, Set<V> cmp) {
+		visited.add(v);
+		cmp.add(v);
+		for (V w : g.getSuccessorVertexSet(v)) {
+			if (!visited.contains(w)) {
+				visitDF(w, g, visited, cmp);
+			}
+		}
+	}
 	public StrongComponents(DirectedGraph<V> g) {
-		// ...
+		DepthFirstOrder<V> dfo = new DepthFirstOrder<>(g);
+		List<V> p = dfo.postOrder();
+		List<V> pi = p.reversed();
+
+		DirectedGraph<V> gi = g.invert();
+
+		Set<V> visited = new HashSet<>();
+
+		for (V v : pi) {
+			if (!visited.contains(v)) {
+				Set<V> cur = new HashSet<>();
+				visitDF(v, gi, visited, cur);
+				comp.put(numberOfComp++, cur);
+			}
+		}
 	}
 	
 	/**
@@ -43,7 +64,15 @@ public class StrongComponents<V> {
 
 	@Override
 	public String toString() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < numberOfComp; i++) {
+			sb.append("Component ")
+					.append(i)
+					.append(": ")
+					.append(comp.get(i).toString())
+					.append("\n");
+		}
+		return sb.toString();
 	}
 	
 		

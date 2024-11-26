@@ -21,9 +21,41 @@ public class DirectedCycle<V> {
 	 * Falls ein Zyklus erkannt wird, wird die Suche abgebrochen.
 	 * @param g gerichteter Graph.
 	 */
+
+	private boolean searchDirectedCycle(V v, DirectedGraph<V> g, Set<V> visited, Stack<V> path, Set<V> nodeInPath) {
+		visited.add(v);
+		path.push(v);
+		nodeInPath.add(v);
+		for (V w : g.getSuccessorVertexSet(v)) {
+			if (!visited.contains(w)) {
+				searchDirectedCycle(w, g, visited, path, nodeInPath);
+				if (!cycle.isEmpty()) {
+					return true;
+				}
+			} else if (nodeInPath.contains(w)) {
+				cycle.addAll(path);
+				return true;
+			}
+		}
+
+		path.pop();
+		nodeInPath.remove(v);
+		return false;
+	}
+
 	public DirectedCycle(DirectedGraph<V> g) {
 		myGraph = g;
-		// ...
+		Set<V> visited = new HashSet<>();
+		Stack<V> path = new Stack<>();
+		Set<V> nodeInPath = new HashSet<>();
+		for (V s : myGraph.getVertexSet()) {
+			if (!visited.contains(s)) {
+				boolean res = searchDirectedCycle(s, g, visited, path, nodeInPath);
+				if (res) {
+					break;
+				}
+			}
+		}
 	}
 
 	
@@ -45,6 +77,7 @@ public class DirectedCycle<V> {
 
 	
 	public static void main(String[] args) {
+
 		DirectedGraph<Integer> g = new AdjacencyListDirectedGraph<>();
 		g.addEdge(1,2);
 		g.addEdge(2,5);

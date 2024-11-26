@@ -25,7 +25,11 @@ public class TopologicalSort<V> {
 	 * @param g gerichteter Graph.
 	 */
 	public TopologicalSort(DirectedGraph<V> g) {
-        // ...
+        DirectedCycle<V> cycle = new DirectedCycle<>(g);
+		if (!cycle.hasCycle()) {
+			DepthFirstOrder<V> ord = new DepthFirstOrder<>(g);
+			ts.addAll(ord.postOrder().reversed());
+		}
     }
     
 	/**

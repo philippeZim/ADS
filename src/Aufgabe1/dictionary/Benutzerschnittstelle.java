@@ -1,3 +1,4 @@
+
 package Aufgabe1.dictionary;
 import java.io.File;
 import java.io.FileNotFoundException;
