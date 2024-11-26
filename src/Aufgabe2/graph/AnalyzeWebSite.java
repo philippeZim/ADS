@@ -72,7 +72,26 @@ public class AnalyzeWebSite {
 
         // Definiere und initialisiere rankTable:
         // Ihr Code: ...
+        Map<V, Double> rank = new HashMap<>();
+        for (V v : g.getVertexSet()) {
+            rank.put(v, 1.);
+        }
+        double a = 0.5;
 
+
+        double e = 1.;
+        while (e > 0.001) {
+            for (V w : rank.keySet()) {
+                double rw = (1-a);
+                double sum = 0.;
+                for (V v : g.getPredecessorVertexSet(w)) {
+                    sum += rank.get(v) / g.getSuccessorVertexSet(v).size();
+                }
+                rw += a * sum;
+                e = rw / rank.get(w);
+                rank.put(w, rw);
+            }
+        }
         // Iteration:
         // Ihr Code: ...
 
