@@ -20,7 +20,7 @@ public class AnalyzeWebSite {
     public static void main(String[] args) throws IOException {
         // Graph aus Website erstellen und ausgeben:
         //DirectedGraph<String> webSiteGraph = buildGraphFromWebSite("data/WebSiteKlein");
-        DirectedGraph<String> webSiteGraph = buildGraphFromWebSite("data/WebSiteGross");
+        DirectedGraph<String> webSiteGraph = buildGraphFromWebSite("src/Aufgabe2/data/WebSiteGross");
         System.out.println("Anzahl Seiten: \t" + webSiteGraph.getNumberOfVertexes());
         System.out.println("Anzahl Links: \t" + webSiteGraph.getNumberOfEdges());
         //System.out.println(webSiteGraph);
@@ -88,7 +88,7 @@ public class AnalyzeWebSite {
                     sum += rank.get(v) / g.getSuccessorVertexSet(v).size();
                 }
                 rw += a * sum;
-                e = rw / rank.get(w);
+                e = Math.abs(rw - rank.get(w));
                 rank.put(w, rw);
             }
         }
@@ -96,12 +96,30 @@ public class AnalyzeWebSite {
         // Ihr Code: ...
 
         // Rank Table ausgeben (nur für data/WebSiteKlein):
-        // Ihr Code: ...
+        if (rank.size() < 100) {
+            for (V v : rank.keySet()) {
+                System.out.println(v + ": " + rank.get(v));
+            }
+        } else {
+            // Nach Ranks sortieren Top 100 ausgeben (nur für data/WebSiteGross):
 
-        // Nach Ranks sortieren Top 100 ausgeben (nur für data/WebSiteGross):
-        // Ihr Code: ...
+            ArrayList<Map.Entry<V, Double>> li = new ArrayList<>(rank.entrySet());
+            li.sort(Comparator.comparing(Map.Entry::getValue));
+            for (int i = li.size() - 1; i > li.size() - 101; i--) {
+                System.out.println(li.get(i).toString());
+            }
+
+            // Top-Seite mit ihren Vorgängern und Ranks ausgeben (nur für data/WebSiteGross):
+            System.out.println();
+            System.out.println("Top 1. Seite:");
+            System.out.println(li.getLast().toString());
+
+
+        }
+
+
         
-        // Top-Seite mit ihren Vorgängern und Ranks ausgeben (nur für data/WebSiteGross):
+
         
     }
 }
