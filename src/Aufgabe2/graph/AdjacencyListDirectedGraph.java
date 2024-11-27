@@ -32,7 +32,7 @@ public class AdjacencyListDirectedGraph<V extends Comparable<V>> implements Dire
 
 	@Override
 	public boolean addVertex(V v) {
-		if (succ.containsKey(v)) {
+		if (containsVertex(v)) {
 			return false;
 		}
 		succ.put(v, new TreeMap<>());
