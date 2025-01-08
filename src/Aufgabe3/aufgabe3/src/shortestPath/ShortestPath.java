@@ -7,6 +7,7 @@ package shortestPath;
 import undirectedGraph.*;
 import sim.SYSimulation;
 
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.HashMap;
@@ -98,6 +99,9 @@ public class ShortestPath<V> {
 
 		while (!cand.isEmpty()) {
 			V v = cand.removeMin();
+			if (sim != null) {
+				sim.visitStation((int) v, Color.BLUE);
+			}
 			if (v.equals(z)) {
 				return; // return true
 			}
